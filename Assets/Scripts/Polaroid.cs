@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.Events;
 public class Polaroid : MonoBehaviour
 {
     [SerializeField] GameObject photo3D;
@@ -21,6 +21,8 @@ public class Polaroid : MonoBehaviour
     [SerializeField] AnimationCurve fadeCurve;
     float currentFadeTime = 0f;
     bool isFading = false;
+
+    [HideInInspector]public UnityEvent onPlayerAction;
     void Start()
     {
         screenCapture = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
@@ -56,6 +58,10 @@ public class Polaroid : MonoBehaviour
                 if (Input.GetMouseButtonDown(0))
                 {
                     StartCoroutine(CapturePhoto());
+                    if (onPlayerAction != null)
+                    {
+                        onPlayerAction.Invoke();
+                    }
                 }
             }
         }
