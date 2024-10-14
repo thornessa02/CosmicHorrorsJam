@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f64a55e0a18faa64a96a722c471840be, type: 3}
+  m_Name: office_wall_pillar_convex
+  m_EditorClassIdentifier: 
+  sampleCount: 512
+  surfaceBias: 0.000001
+  redChannel: 1
+  greenChannel: 2
+  blueChannel: 0
+  alphaChannel: 0
+  curvatureMaxDist: 0.01
+  curvatureRange: {x: 0, y: 1}
+  occlusionMaxDist: 1
+  occlusionRayBias: 0.01
+  occlusionExponent: 2
