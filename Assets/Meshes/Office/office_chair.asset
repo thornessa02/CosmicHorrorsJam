@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f64a55e0a18faa64a96a722c471840be, type: 3}
-  m_Name: office_wall_200
+  m_Name: office_chair
   m_EditorClassIdentifier: 
-  sampleCount: 512
+  sampleCount: 64
   surfaceBias: 0.000001
   redChannel: 1
   greenChannel: 2
