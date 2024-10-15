@@ -179,6 +179,7 @@ GameObject:
   - component: {fileID: 6331610386960460724}
   - component: {fileID: 6100764735685777898}
   - component: {fileID: 2920630014902314003}
+  - component: {fileID: -1794823307756795943}
   m_Layer: 6
   m_Name: Photo
   m_TagString: Untagged
@@ -196,8 +197,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.6430763, y: 0.31682327, z: -0.30783215, w: 0.625552}
   m_LocalPosition: {x: -2.95, y: 1.27, z: -3.53}
-  m_LocalScale: {x: 0.09, y: 1, z: 0.09}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.009866252, y: 0.10962502, z: 0.009866252}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3511524574973383746}
   - {fileID: 9040454055583552242}
@@ -301,3 +302,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 11.017903, y: 0.05, z: 10.892685}
   m_Center: {x: -0.043259893, y: 0, z: -0.06519423}
+--- !u!114 &-1794823307756795943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5722160765512687822}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a497b41bb981574dbb331b7ba62c541, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 500

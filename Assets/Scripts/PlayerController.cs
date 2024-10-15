@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     Vector3 initialPos;
     Quaternion initialRot;
     bool isInspecting;
+    bool photo;
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -62,9 +63,15 @@ public class PlayerController : MonoBehaviour
                     initialRot = hit.collider.transform.rotation;
                     hit.collider.transform.parent = itemPos.transform;
                     hit.collider.transform.localPosition = Vector3.zero;
-                    
+
+                    if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Photo"))
+                    {
+                        photo = true;
+                        hit.collider.gameObject.GetComponent<Rigidbody>().useGravity = false;
+                    }
+
                     hit.collider.gameObject.layer = LayerMask.NameToLayer("Inspected");
-                    hit.collider.gameObject.GetComponent<ItemInspector>().enabled = true;
+                    hit.collider.gameObject.GetComponent<ItemInspector>().enabled = true;    
                 }
             }
         }
@@ -80,6 +87,13 @@ public class PlayerController : MonoBehaviour
                 inspectedObj.layer = LayerMask.NameToLayer("Default");
                 inspectedObj.GetComponent<ItemInspector>().enabled = false;
                 isInspecting = false;
+
+                if (photo)
+                {
+                    inspectedObj.layer = LayerMask.NameToLayer("Photo");
+                    inspectedObj.GetComponent<Rigidbody>().useGravity = false;
+                    photo = false;
+                }
             }
         }
     }
