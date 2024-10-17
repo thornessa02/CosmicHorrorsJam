@@ -12,6 +12,7 @@ public class Polaroid : MonoBehaviour
 
     [Header("Polaroid Anim")]
     [SerializeField] GameObject polaroidModel;
+    [SerializeField] Camera inspectCam;
     [SerializeField] Transform initialPosition;
     [SerializeField] Transform targetPosition;
     [SerializeField] float lerpSpeed = 5f;
@@ -19,6 +20,8 @@ public class Polaroid : MonoBehaviour
     [SerializeField] float initialFOV = 60f;
     [SerializeField] float targetFOV = 10f;
 
+    [Header("Photo Anim")]
+    [SerializeField] Transform leftHand_PhotoPos;
 
     [HideInInspector]public UnityEvent onPlayerAction;
     void Start()
@@ -39,9 +42,9 @@ public class Polaroid : MonoBehaviour
             
 
             float distanceToTarget = Vector3.Distance(polaroidModel.transform.position, targetPosition.position);
-            if (distanceToTarget <= 0.1) Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, targetFOV, fovLerpSpeed * Time.deltaTime);
+            if (distanceToTarget <= 0.1) inspectCam.fieldOfView = Mathf.Lerp(inspectCam.fieldOfView, targetFOV, fovLerpSpeed * Time.deltaTime);
 
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && distanceToTarget <= 0.02)
                 {
                     StartCoroutine(CapturePhoto());
                     if (onPlayerAction != null)
@@ -52,8 +55,8 @@ public class Polaroid : MonoBehaviour
         }
         else
         {
-            Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, initialFOV, fovLerpSpeed * Time.deltaTime);
-            if (Camera.main.fieldOfView >= 50)
+            inspectCam.fieldOfView = Mathf.Lerp(inspectCam.fieldOfView, initialFOV, fovLerpSpeed * Time.deltaTime);
+            if (inspectCam.fieldOfView >= 50)
             {
                 polaroidModel.transform.position = Vector3.Lerp(polaroidModel.transform.position, initialPosition.position, lerpSpeed * Time.deltaTime);
                 polaroidModel.transform.rotation = Quaternion.Lerp(polaroidModel.transform.rotation, initialPosition.rotation, lerpSpeed * Time.deltaTime);
@@ -79,7 +82,11 @@ public class Polaroid : MonoBehaviour
 
     void ShowPhoto()
     {
-        GameObject newPhoto = Instantiate(photo3D,polaroidModel.transform.position,Quaternion.identity);
+        if (leftHand_PhotoPos.childCount > 0) Destroy(leftHand_PhotoPos.GetChild(0).gameObject); 
+
+        GameObject newPhoto = Instantiate(photo3D, Vector3.zero, Quaternion.identity,leftHand_PhotoPos);
+        newPhoto.transform.localPosition = Vector3.zero;
+        newPhoto.transform.localRotation = Quaternion.Euler(0,180,0);
         Material newMaterial = new Material(photoMat); // Use the standard shader or any shader of your choice
         newMaterial.mainTexture = screenCapture;
 
