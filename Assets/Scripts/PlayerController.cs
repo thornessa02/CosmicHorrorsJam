@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -22,6 +23,24 @@ public class PlayerController : MonoBehaviour
     Quaternion initialRot;
     bool isInspecting;
     bool photo;
+
+    [Header("Inventory")]
+    [SerializeField] GameObject inventoryHUD;
+    [SerializeField] GameObject slotPrefab;
+    List<Item> inventory = new List<Item>();
+    struct Item
+    {
+        public string ID;
+        public Sprite sprite;
+
+        public Item(string ID, Sprite sprite)
+        {
+            this.ID = ID;
+            this.sprite = sprite;
+        }
+    }
+
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -73,6 +92,14 @@ public class PlayerController : MonoBehaviour
                     hit.collider.gameObject.layer = LayerMask.NameToLayer("Inspected");
                     hit.collider.gameObject.GetComponent<ItemInspector>().enabled = true;    
                 }
+
+                if(hit.collider.gameObject.GetComponent<Collectable>() != null)
+                {
+                    Collectable info = hit.collider.gameObject.GetComponent<Collectable>();
+                    AddItem(info.itemID,info.sprite);
+                    UpdateInventoryUI();
+                    Destroy(hit.collider.gameObject);
+                }
             }
         }
 
@@ -97,4 +124,29 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
+
+    void AddItem(string ID,Sprite sprite)
+    {
+        Item newItem = new Item(ID,sprite);
+        inventory.Add(newItem);
+    }
+    void RemoveItem()
+    {
+
+    }
+    void UpdateInventoryUI()
+    {
+        for (int i = 0; i < inventoryHUD.transform.childCount; i++)
+        {
+            Destroy(inventoryHUD.transform.GetChild(0).gameObject);
+        }
+
+        foreach (Item item in inventory)
+        {
+            GameObject slot = Instantiate(slotPrefab, inventoryHUD.transform);
+            slot.GetComponent<Image>().sprite = item.sprite;
+        }
+    }
+        
 }
